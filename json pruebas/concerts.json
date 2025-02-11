@@ -1,0 +1,42 @@
+[
+    {
+        "eventName": "Rock Night Fest",
+        "img": "https://example.com/rock-night.jpg",
+        "description": "Una noche llena de rock con las mejores bandas locales.",
+        "dateTime": "2025-03-15T20:00:00",
+        "place": "Estadio Nacional, Ciudad de México",
+        "price": 850.50
+    },
+    {
+        "eventName": "Jazz & Blues Evening",
+        "img": "https://example.com/jazz-evening.jpg",
+        "description": "Disfruta de una velada con los mejores artistas de jazz y blues.",
+        "dateTime": "2025-04-10T19:30:00",
+        "place": "Teatro Metropolitano, Buenos Aires",
+        "price": 650.00
+    },
+    {
+        "eventName": "EDM Explosion",
+        "img": "https://example.com/edm-explosion.jpg",
+        "description": "Los mejores DJs del mundo en un evento épico de música electrónica.",
+        "dateTime": "2025-05-22T23:00:00",
+        "place": "Playa del Carmen, México",
+        "price": 1200.75
+    },
+    {
+        "eventName": "Festival Indie Live",
+        "img": "https://example.com/indie-festival.jpg",
+        "description": "Descubre nuevas bandas indie en un ambiente único.",
+        "dateTime": "2025-06-05T18:00:00",
+        "place": "Parque Central, Bogotá",
+        "price": 450.00
+    },
+    {
+        "eventName": "Clásicos del Pop",
+        "img": "https://example.com/pop-classics.jpg",
+        "description": "Un recorrido por los mejores éxitos del pop de los 80s y 90s.",
+        "dateTime": "2025-07-12T20:00:00",
+        "place": "Auditorio Nacional, Madrid",
+        "price": 700.00
+    }
+]
