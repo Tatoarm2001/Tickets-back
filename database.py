@@ -1,13 +1,14 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy.orm import sessionmaker
+import os
 
-# Conexión a la base de datos MySQL
-SQLALCHEMY_DATABASE_URL = "mysql+mysqlconnector://root:1234@localhost/ticket_store"
+# Obtiene la URL de la base de datos desde las variables de entorno
+DATABASE_URL = os.getenv("DATABASE_URL")
 
-# Crear el motor de la base de datos
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
+# Crea el motor de la base de datos
+engine = create_engine(DATABASE_URL)
 
-# Crear una sesión local
+# Sesión de la base de datos
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # Definir la clase base
