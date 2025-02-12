@@ -1,25 +1,32 @@
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel
 from datetime import datetime
-from typing import Optional, List
+from typing import Optional
 
-# 🎵 Modelo base para conciertos
-class ConcertBase(BaseModel):
-    name: str = Field(..., example="Concierto Rock")
-    place: str = Field(..., example="Estadio Nacional")
-    date: datetime = Field(..., example="2025-06-15T20:00:00")
-    price: float = Field(..., example=99.99)
-    stock: int = Field(..., example=6)
+# Pydantic model para la creación de conciertos
+class ConcertCreate(BaseModel):
+    eventName: str  # Nombre del evento
+    img: str  # URL de la imagen del concierto
+    description: str  # Descripción del concierto
+    dateTime: datetime  # Fecha y hora del evento
+    place: str  # Lugar del evento
+    price: float  # Precio del ticket
+    stock: Optional[int] = 6  # Stock por defecto 6
+    body: str  # Descripción adicional del evento
 
-# 📩 Esquema para crear un nuevo concierto (mismo que ConcertBase)
-class ConcertCreate(ConcertBase):
-    pass
+    class Config:
+        orm_mode = True  # Permite que Pydantic pueda trabajar con modelos de SQLAlchemy
 
-# 📤 Esquema de salida con ID incluido
-class ConcertOut(ConcertBase):
-    id: int
-    model_config = ConfigDict(from_attributes=True)  # Para Pydantic v2
+# Pydantic model para la respuesta al consultar conciertos
+class ConcertResponse(BaseModel):
+    id: int  # ID del concierto
+    eventName: str  # Nombre del evento
+    img: str  # URL de la imagen del concierto
+    description: str  # Descripción del concierto
+    dateTime: datetime  # Fecha y hora del evento
+    place: str  # Lugar del evento
+    price: float  # Precio del ticket
+    stock: int  # Stock disponible
+    body: str  # Descripción adicional
 
-# 🎟️ Esquema para actualizar stock
-class CartUpdate(BaseModel):
-    id: int = Field(..., example=1)
-    stock: int = Field(..., example=3)
+    class Config:
+        orm_mode = True  # Permite que Pydantic pueda trabajar con modelos de SQLAlchemy
