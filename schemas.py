@@ -11,7 +11,6 @@ class ConcertCreate(BaseModel):
     place: str  # Lugar del evento
     price: float  # Precio del ticket
     stock: Optional[int] = 6  # Stock por defecto 6
-    body: str  # Descripción adicional del evento
 
     class Config:
         orm_mode = True  # Permite que Pydantic pueda trabajar con modelos de SQLAlchemy
@@ -26,7 +25,6 @@ class ConcertResponse(BaseModel):
     place: str  # Lugar del evento
     price: float  # Precio del ticket
     stock: int  # Stock disponible
-    body: str  # Descripción adicional
 
     class Config:
         orm_mode = True  # Permite que Pydantic pueda trabajar con modelos de SQLAlchemy
