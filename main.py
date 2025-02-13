@@ -6,6 +6,7 @@ import models
 import schemas
 from typing import List, Optional
 from datetime import datetime
+from fastapi.middleware.cors import CORSMiddleware  # Importar CORS
 
 # Crea las tablas en la base de datos
 models.Base.metadata.create_all(bind=engine)
@@ -16,9 +17,21 @@ app = FastAPI(
     version="1.0.0"
 )
 
+# Configuración de CORS
+origins = [
+    "http://localhost:5173",  # Para desarrollo con Vite
+    "https://tudominio.com",  # Si tienes un frontend desplegado
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,  # Origen permitido
+    allow_credentials=True,
+    allow_methods=["*"],  # Permitir todos los métodos (GET, POST, PUT, DELETE, etc.)
+    allow_headers=["*"],  # Permitir todos los headers
+)
+
 # Dependencia para obtener la sesión de la base de datos
-
-
 def get_db():
     db = SessionLocal()
     try:
@@ -26,18 +39,14 @@ def get_db():
     finally:
         db.close()
 
-
 @app.get("/")
 def read_root():
     return {"message": "Bienvenido a la API de conciertos"}
-
 
 @app.post("/concerts/", response_model=schemas.ConcertResponse)
 def create_concert(concert: schemas.ConcertCreate, db: Session = Depends(get_db)):
     return crud.create_concert(db=db, concert=concert)
 
-
-# Obtener un concierto por ID
 @app.get("/concerts/{concert_id}", response_model=schemas.ConcertResponse)
 def get_concert(concert_id: int, db: Session = Depends(get_db)):
     concert = crud.get_concert(db, concert_id)
@@ -45,14 +54,10 @@ def get_concert(concert_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Concierto no encontrado")
     return concert
 
-
-# Obtener todos los conciertos
 @app.get("/concerts/", response_model=List[schemas.ConcertResponse])
 def get_concerts(db: Session = Depends(get_db)):
     return crud.get_concerts(db)
 
-
-# Obtener conciertos con filtros
 @app.get("/concerts/filtered/", response_model=List[schemas.ConcertResponse])
 def search_concerts(
     event_name: Optional[str] = Query(None),
@@ -67,8 +72,6 @@ def search_concerts(
         db, event_name, place, date_from, date_to, price_min, price_max
     )
 
-
-# Actualizar un concierto
 @app.put("/concerts/{concert_id}", response_model=schemas.ConcertResponse)
 def update_concert(
     concert_id: int,
@@ -80,8 +83,6 @@ def update_concert(
         raise HTTPException(status_code=404, detail="Concierto no encontrado")
     return updated_concert
 
-
-# Eliminar un concierto
 @app.delete("/concerts/{concert_id}", response_model=schemas.ConcertResponse)
 def delete_concert(concert_id: int, db: Session = Depends(get_db)):
     deleted_concert = crud.delete_concert(db, concert_id)
@@ -89,23 +90,18 @@ def delete_concert(concert_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Concierto no encontrado")
     return deleted_concert
 
-
-# Actualizar el stock
 @app.put("/cart/update-stock/", response_model=List[schemas.ConcertResponse])
 def update_cart_stock(
     concerts_data: List[dict] = Body(...),
     db: Session = Depends(get_db),
 ):
     updated_concerts = crud.update_concert_stock(db, concerts_data)
-
     if not updated_concerts:
         raise HTTPException(
             status_code=404, detail="No se encontraron conciertos para actualizar"
         )
-
     return updated_concerts
 
-# 🎟️ Obtener conciertos paginados
 @app.get("/concerts/page/{page}", response_model=List[schemas.ConcertResponse])
 def get_concerts_paginated(page: int, db: Session = Depends(get_db)):
     if page < 1:
