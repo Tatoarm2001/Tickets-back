@@ -95,3 +95,9 @@ def update_concert_stock(db: Session, concerts_data: list[dict]):
 def get_concerts_paginated(db: Session, page: int, page_size: int = 6):
     offset = (page - 1) * page_size
     return db.query(Concert).offset(offset).limit(page_size).all()
+
+# 🚨 Eliminar todos los conciertos
+def delete_all_concerts(db: Session):
+    deleted_count = db.query(Concert).delete()
+    db.commit()
+    return {"message": f"{deleted_count} conciertos eliminados"}

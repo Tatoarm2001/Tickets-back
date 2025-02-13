@@ -111,3 +111,7 @@ def get_concerts_paginated(page: int, db: Session = Depends(get_db)):
     if page < 1:
         raise HTTPException(status_code=400, detail="La página debe ser 1 o mayor")
     return crud.get_concerts_paginated(db, page)
+
+@app.delete("/concerts/", response_model=dict)
+def delete_all_concerts(db: Session = Depends(get_db)):
+    return crud.delete_all_concerts(db)
