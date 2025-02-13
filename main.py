@@ -43,9 +43,13 @@ def get_db():
 def read_root():
     return {"message": "Bienvenido a la API de conciertos"}
 
-@app.post("/concerts/", response_model=schemas.ConcertResponse)
-def create_concert(concert: schemas.ConcertCreate, db: Session = Depends(get_db)):
-    return crud.create_concert(db=db, concert=concert)
+# 🆕 Crear múltiples conciertos
+@app.post("/concerts/", response_model=List[schemas.ConcertResponse])
+def create_concerts(
+    concerts: List[schemas.ConcertCreate] = Body(...),
+    db: Session = Depends(get_db)
+):
+    return crud.create_concerts(db=db, concerts=concerts)
 
 @app.get("/concerts/{concert_id}", response_model=schemas.ConcertResponse)
 def get_concert(concert_id: int, db: Session = Depends(get_db)):

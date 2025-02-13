@@ -3,13 +3,17 @@ from sqlalchemy import and_
 from models import Concert
 import schemas
 
-# 🆕 Crear un nuevo concierto
-def create_concert(db: Session, concert: schemas.ConcertCreate):
-    db_concert = Concert(**concert.model_dump())  # Convierte Pydantic a diccionario
-    db.add(db_concert)
-    db.commit()
-    db.refresh(db_concert)  # Recarga para obtener el ID asignado
-    return db_concert
+# 🆕 Crear múltiples conciertos
+def create_concerts(db: Session, concerts: list[schemas.ConcertCreate]):
+    db_concerts = [Concert(**concert.model_dump()) for concert in concerts]  # Convierte cada objeto Pydantic en un diccionario
+    db.add_all(db_concerts)  # Añade todos los conciertos a la sesión
+    db.commit()  # Guarda los cambios en la base de datos
+    
+    # Recarga los conciertos con sus IDs generados
+    for concert in db_concerts:
+        db.refresh(concert)
+
+    return db_concerts
 
 # 🔍 Obtener un concierto por ID
 def get_concert(db: Session, concert_id: int):
