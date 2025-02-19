@@ -4,7 +4,7 @@ from typing import Optional
 
 # Pydantic model para la creación de conciertos
 class ConcertCreate(BaseModel):
-    eventName: str  # Nombre del evento
+    event_name: str  # Nombre del evento
     img: str  # URL de la imagen del concierto
     description: str  # Descripción del concierto
     dateTime: datetime  # Fecha y hora del evento
@@ -18,7 +18,7 @@ class ConcertCreate(BaseModel):
 # Pydantic model para la respuesta al consultar conciertos
 class ConcertResponse(BaseModel):
     id: int  # ID del concierto
-    eventName: str  # Nombre del evento
+    event_name: str  # Nombre del evento
     img: str  # URL de la imagen del concierto
     description: str  # Descripción del concierto
     dateTime: datetime  # Fecha y hora del evento

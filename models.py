@@ -11,7 +11,7 @@ class Concert(Base):
     __tablename__ = "concerts"
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    eventName = Column(String(255), nullable=False)
+    event_name = Column(String(255), nullable=False)  # Cambio de eventName a event_name
     img = Column(String(500), nullable=False)
     description = Column(Text, nullable=False)
     dateTime = Column(DateTime, nullable=False)

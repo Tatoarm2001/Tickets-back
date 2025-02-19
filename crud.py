@@ -26,7 +26,7 @@ def get_concerts(db: Session):
 # 🚀 Obtener conciertos con filtros dinámicos
 def get_concerts_filtered(
     db: Session,
-    eventName: str = None,
+    event_name: str = None,
     place: str = None,
     dateTime_from: str = None,
     dateTime_to: str = None,
@@ -40,8 +40,8 @@ def get_concerts_filtered(
     # Construye filtros dinámicos
     filters = []
     
-    if eventName:
-        filters.append(Concert.eventName.ilike(f"%{eventName}%"))  # Búsqueda parcial
+    if event_name:
+        filters.append(Concert.event_name.ilike(f"%{event_name}%"))  # Búsqueda parcial
     if place:
         filters.append(Concert.place.ilike(f"%{place}%"))  # Búsqueda parcial
     if dateTime_from:
