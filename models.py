@@ -14,7 +14,7 @@ class Concert(Base):
     event_name = Column(String(255), nullable=False)  # Cambio de eventName a event_name
     img = Column(String(500), nullable=False)
     description = Column(Text, nullable=False)
-    dateTime = Column(DateTime, nullable=False)
+    date_time = Column(DateTime, nullable=False)
     place = Column(String(255), nullable=False)
     price = Column(DECIMAL(5, 2), nullable=False)
     stock = Column(Integer, nullable=False, server_default=text("6"))

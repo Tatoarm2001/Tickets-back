@@ -45,9 +45,9 @@ def get_concerts_filtered(
     if place:
         filters.append(Concert.place.ilike(f"%{place}%"))  # Búsqueda parcial
     if dateTime_from:
-        filters.append(Concert.dateTime >= dateTime_from)
+        filters.append(Concert.date_time >= dateTime_from)
     if dateTime_to:
-        filters.append(Concert.dateTime <= dateTime_to)
+        filters.append(Concert.date_time <= dateTime_to)
     if priceMin:
         filters.append(Concert.price >= priceMin)
     if priceMax:
